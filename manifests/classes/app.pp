@@ -13,10 +13,11 @@ class app {
   }
   
   # XML for nokogiri
-  package { ['libxml2-dev', 'libxslt-dev']:
+  package { ['libxml2-dev', 'libxslt1-dev']:
     ensure => installed,
   }
 
+  create_user{'gitbot':}
   create_user{'rails':}
   file { "/u":
     ensure  => directory,
