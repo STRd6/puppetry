@@ -1,12 +1,11 @@
-define create_user($ssh_key) {
+define create_user($ssh_key="") {
   $username = $title
   
   user { $username:
     ensure => present,
+    groups => ['users'],
     managehome => true,
   }
-  
-  $key_name = "${username}@remote"
   
   file { "/home/${username}/":
     ensure  => directory,
@@ -21,13 +20,17 @@ define create_user($ssh_key) {
     require => [User[$username], File["/home/${username}/"]],
   }
   
-  ssh_authorized_key { $key_name:
-    ensure => 'present',
-    key => $ssh_key,
-    name => $key_name,
-    type => 'ssh-rsa',
-    user => $username,
-    require => File["/home/${username}/.ssh"],
+  if $ssh_key {
+		$key_name = "${username}@remote"
+      
+    ssh_authorized_key { $key_name:
+      ensure => 'present',
+      key => $ssh_key,
+      name => $key_name,
+      type => 'ssh-rsa',
+      user => $username,
+      require => File["/home/${username}/.ssh"],
+    }
   }
 }
 
@@ -39,4 +42,3 @@ class strd6_users {
     ssh_key => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA3XNHAzkJeQU+BT30xBufdavhbaykGVzjaNTYMFjOaUQ0SJKLGFS4PdIe9q+/JKMDRWC4Gr/5gUQ1/Es64uq6yFZrwcqbJ38SLWKi2M6NYaMPrt8SyBF8kmDtuZvXu/psNnHAaArkuewgwl7BN66oB7n07JlxTcRG4+h40vUXJHWQDutyy9lZXjJuPPOjfABKsh7lU8EHoG+KMjPDeGjgNPWcAnPYZaXn4DcN4vVln1hMj53M0rsWBRmHATiHXouPfV0Azr6EJ2FE9e+qlFxr4pM7jLEJlmtjffb6I+589CHRz/fVvJXWb0EFXpCMhuhI4RmUx0Dl0a/Hh59Gg2+jlQ==',
   }
 }
-

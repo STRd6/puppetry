@@ -2,18 +2,17 @@ class core {
   #TODO this is kind of messy
   
   # Version control
-  package { ['git-core', 'subversion']:
+  package { ['git-core']:
     ensure => installed,
   }
   
   # Readline
-  #TODO Figure out which of these we don't need
-  package { ['libreadline5', 'libreadline-dev', 'libreadline5-dev', 'libreadline6-dev']:
+  package { ['libreadline6', 'libreadline6-dev']:
     ensure => installed,
   }
   
   # Web/ssl
-  package { ['openssl', 'curl', 'libssl-dev']:
+  package { ['openssl', 'libssl-dev', 'curl']:
     ensure => installed,
   }
   

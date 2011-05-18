@@ -3,17 +3,25 @@ class app {
   
   # Java for jsdoc-toolkit
   #TODO look into using V8
-  package { ['sun-java6-jre']:
-    ensure => installed,
-  }
+  # package { ['sun-java6-jre']:
+  #   ensure => installed,
+  # }
   
   # Imagemagick for RMagick
-  package {['libmagick9-dev', 'imagemagick']:
+  package {['libmagickwand-dev', 'imagemagick']:
     ensure => installed,
   }
   
   # XML for nokogiri
   package { ['libxml2-dev', 'libxslt-dev']:
     ensure => installed,
+  }
+
+  create_user{'rails':}
+  file { "/u":
+    ensure  => directory,
+    owner   => "rails",
+    group   => "users",
+    mode   => 664,
   }
 }
