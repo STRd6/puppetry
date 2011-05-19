@@ -1,5 +1,6 @@
 class core {
-  #TODO this is kind of messy
+  include "ssh"
+  include "sudoers"
   
   # Version control
   package { ['git-core']:
