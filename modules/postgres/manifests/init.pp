@@ -6,6 +6,7 @@ class postgres {
   file { "/etc/postgresql/8.4/main/pg_hba.conf":
     owner   => "postgres",
     group   => "postgres",
+    mode    => 640,
     source  => "puppet:///modules/postgres/pg_hba.conf",
     require => Package["postgresql"],
   }

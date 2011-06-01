@@ -1,18 +1,37 @@
 class app_files {
-  #TODO These are much more specific to the app thant the server
-  
-  file { "/u/shared/":
+  $app_name = "pixie.strd6.com"
+
+  file { "/u/apps/${app_name}/":
     ensure => directory,
-    owner   => "rails",
-    group   => "rails",
+    owner => "daniel",
+    group => "users",
+    mode => 664,
+    require => File["/u/apps/"],
+  }
+
+  file { "/u/apps/${app_name}/shared/":
+    ensure => directory,
+    owner   => "daniel",
+    group   => "users",
+    mode => 664,
+    require => File["/u/apps/${app_name}/"],
+  }
+
+  file { "/u/apps/${app_name}/shared/local":
+    ensure => directory,
+    owner   => "daniel",
+    group   => "users",
+    mode => 664,
+    require => File["/u/apps/${app_name}/shared"],
   }
 
   define app_file() {
-    file { "/u/shared/${title}":
-      owner   => "rails",
-      group   => "rails",
-      source  => "puppet:///modules/secret/${title}",
-      require => File["/u/shared/"],
+    file { "/u/apps/${app_name}/shared/local/${title}":
+      owner   => "daniel",
+      group   => "users",
+      mode => 664,
+      source  => "puppet:///modules/app_files/${title}",
+      require => File["/u/apps/${app_name}/shared/local"],
     }
   }
 

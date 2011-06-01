@@ -19,10 +19,19 @@ class app {
 
   create_user{'gitbot':}
   create_user{'rails':}
+
   file { "/u":
     ensure  => directory,
-    owner   => "rails",
+    owner   => "daniel",
     group   => "users",
-    mode   => 664,
+    mode    => 664,
+  }
+
+  file { "/u/apps/":
+    ensure => directory,
+    owner   => "daniel",
+    group   => "users",
+    mode => 664,
+    require => File["/u/"],
   }
 }

@@ -5,27 +5,28 @@ define create_user($ssh_key="") {
     ensure => present,
     groups => ['users', 'rvm'],
     managehome => true,
-    shell   => "/bin/bash",
+    shell => "/bin/bash",
+    require => Group['rvm', 'users']
   }
   
   file { "/home/${username}/":
-    ensure  => directory,
-    owner   => $username,
-    group   => $username,
+    ensure => directory,
+    owner => $username,
+    group => $username,
     require => User[$username],
   }
   
   file { "/home/${username}/.bashrc":
-    owner   => $username,
-    group   => $username,
+    owner => $username,
+    group => $username,
     require => User[$username],
-    source  => "puppet:///modules/strd6_users/bashrc",
+    source => "puppet:///modules/strd6_users/bashrc",
   }
   
   file { "/home/${username}/.ssh": 
     ensure => 'directory',
     owner => $username,
-    group   => $username,
+    group => $username,
     mode => '700',
     require => [User[$username], File["/home/${username}/"]],
   }
@@ -45,6 +46,14 @@ define create_user($ssh_key="") {
 }
 
 class strd6_users {
+  group { 'rvm':
+    ensure => 'present',
+  }
+
+  group { 'users':
+    ensure => 'present',
+  }
+
   create_user{'daniel':
     ssh_key => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA4lQIOpBEdluY3m7vYD3B96aq4vObGmnbaNC4/ut3D5w/DdSheOCTuAoDZHR9ws0v5CNR7TjjblzZVCA6Q/R4CkMjF2yqK4JyZWxS1VABUvlyZLyaQ28dh14dRVO4kpqP0fkKIvUFxzHDsaM1iZNfJyWF4b7YM6QBFoT/7RWPBk0NQ86gWt5DFPlRKf3zYDyLBQ873TLn1L0fZs18MLma+twwgkmio6sktWyfxXMgFJlUJQ64arTBMwtG+23+25UrRoZfK29D2V7H7EEC0tbBlCeq1Pt/KwoPtdas7YA7iurs6sa1aJieaj5l9fjQwApgTT8sv1ZTxrbCeP+UNXIsbQ==',
   }
