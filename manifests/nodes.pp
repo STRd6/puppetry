@@ -10,8 +10,6 @@ node 'li230-219.members.linode.com' inherits basenode {
   
   if $rvm_installed == "true" {
     rvm_system_ruby {
-      'ruby-1.9.2-p180':
-        ensure => 'present';
       'ree-1.8.7-2011.03':
         ensure => 'present',
         default_use => true;
