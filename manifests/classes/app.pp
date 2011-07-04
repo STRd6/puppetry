@@ -20,6 +20,11 @@ class app {
     ensure => installed,
   }
 
+  # Passenger nginx
+  package { 'libcurl4-openssl-dev':
+    ensure => installed,
+  }
+
   create_user{'gitbot':}
 
   file { "/u":
