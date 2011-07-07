@@ -75,4 +75,13 @@ class strd6_users {
     user => 'rails',
     require => File["/home/rails/.ssh"],
   }
+
+  ssh_authorized_key { 'rails@lana-remote':
+    ensure => 'present',
+    key => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA1ft676evApxnXC8q8wqwOyRe7K7TNN8q5DMZ8+ByA7yGx86URFBrzVMMJTBgd2IkqaK0vbELr6/FvjDAAF/GDeuhxPP1ucC8xyIuSIQXhWRy8PwpL2HvwAD7G42LpxrHBODhikw9x6vMHOF74pDoPBJ+GTV9W3PPRFJ0/px1IAQyv5f4QotoNG8XmjlHxmxa31R9EWaCkglt/o/3GY/8hT5962Tik0fcPcb2EvAMmldwplDZfNFO+5qt7SoVaiC6NlbTyku6NiqcYj04XJOmcY+Pc0NM1XbSuq5k7cjiRJ/O5yxxW3vbYDd2mh1ygy3SNIlelKVTcAO3nWzpDV0uaQ==',
+    name => 'rails@lana-remote',
+    type => 'ssh-rsa',
+    user => 'rails',
+    require => File["/home/rails/.ssh"],
+  }
 }
