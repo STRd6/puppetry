@@ -22,7 +22,14 @@ define create_user($ssh_key="") {
     require => User[$username],
     source => "puppet:///modules/strd6_users/bashrc",
   }
-  
+
+  file { "/home/${username}/.bash_aliases":
+    owner => $username,
+    group => $username,
+    require => User[$username],
+    source => "puppet:///modules/strd6_users/bash_aliases",
+  }
+
   file { "/home/${username}/.ssh": 
     ensure => 'directory',
     owner => $username,

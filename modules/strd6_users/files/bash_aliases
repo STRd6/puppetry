@@ -1,0 +1,2 @@
+alias con='bundle exec rails console production'
+alias pixie='cd /u/apps/pixie.strd6.com/current'
